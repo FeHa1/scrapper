@@ -1,0 +1,12 @@
+# ─── Core ────────────────────────────────────────────────────────────────────
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+pandas>=2.0.0
+lxml>=4.9.0          # Parser más rápido para BeautifulSoup
+
+# ─── Google Maps ─────────────────────────────────────────────────────────────
+outscraper>=5.1.0    # pip install outscraper
+
+# ─── JS dinámico (opcional, solo si BS4 no alcanza) ──────────────────────────
+# playwright>=1.44.0
+# Después de instalar: playwright install chromium
