@@ -64,7 +64,11 @@ ZONES = {
 ACTIVE_ZONES = ["CABA"]
 
 # ─── SerpApi ────────────────────────────────────────────────────────────────
-SERPAPI_KEY = ""  # ← Poner tu API key acá o como variable de entorno SERPAPI_KEY
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
+SERPAPI_KEY = os.getenv("SERPAPI_KEY", "") 
 
 # ─── Scraping general ───────────────────────────────────────────────────────
 REQUEST_DELAY_SECONDS = 2
