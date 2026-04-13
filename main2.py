@@ -3,17 +3,14 @@
 Orquestador principal del scraper de docentes de música.
 
 Uso:
-    # Correr todas las fuentes
+    # Correr todas las fuentes (requiere API key de Outscraper)
     python main.py
 
-    # Solo Google Maps
-    python main.py --skip-superprof --skip-tusclases
-
-    # Solo fuentes gratuitas (sin Maps)
+    # Solo fuentes gratuitas (sin Outscraper)
     python main.py --skip-maps
 
     # Solo un instrumento para pruebas rápidas
-    python main.py --instruments guitarra piano --skip-superprof --skip-tusclases
+    python main.py --instruments guitarra piano --skip-maps
 
     # Combinar con corridas anteriores (merge + dedup)
     python main.py --merge-existing
@@ -27,6 +24,7 @@ import logging
 import sys
 from pathlib import Path
 
+# Asegurar que el root del proyecto esté en el path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from config import INSTRUMENTS, OUTPUT_FILENAME
@@ -48,7 +46,7 @@ def parse_args():
     parser.add_argument(
         "--skip-maps",
         action="store_true",
-        help="No usar Google Maps vía SerpApi",
+        help="No usar Outscraper (útil para pruebas sin API key)",
     )
     parser.add_argument(
         "--skip-superprof",
@@ -89,9 +87,9 @@ def run(args) -> Path:
 
     all_records = []
 
-    # ── Fuente 1: Google Maps (SerpApi) ──────────────────────────────────────
+    # ── Fuente 1: Google Maps (Outscraper) ───────────────────────────────────
     if not args.skip_maps:
-        logger.info("\n[1/3] Google Maps vía SerpApi...")
+        logger.info("\n[1/3] Google Maps vía Outscraper...")
         maps_records = scrape_google_maps(instruments=instruments)
         logger.info(f"     → {len(maps_records)} registros")
         all_records.extend(maps_records)
@@ -128,7 +126,7 @@ def run(args) -> Path:
     all_records = deduplicate(all_records)
     logger.info(f"\nDeduplicación: {before} → {len(all_records)} registros únicos")
 
-    # ── Filtrado final ────────────────────────────────────────────────────────
+    # ── Filtrado final (doble check) ─────────────────────────────────────────
     all_records = [r for r in all_records if has_contact(r)]
     logger.info(f"Tras filtro de contacto: {len(all_records)} registros")
 

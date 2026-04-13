@@ -14,13 +14,13 @@ INSTRUMENTS = [
     "flauta",
     "saxofón",
     "trompeta",
-    "ukelele",
+    #"ukelele",
     "teclado",
-    "acordeón",
-    "contrabajo",
-    "viola",
-    "oboe",
-    "clarinete",
+    #"acordeón",
+    #"contrabajo",
+    #"viola",
+    #"oboe",
+    #"clarinete",
 ]
 
 # ─── Zonas ──────────────────────────────────────────────────────────────────
